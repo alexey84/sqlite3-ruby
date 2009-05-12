@@ -1,7 +1,8 @@
-=== (unreleased)
+=== 1.2.5 / 13 May 2009
+
+* Ruby 1.9.1 UTF-8 support [Jakub Kuźma]
 
 * Check for illegal nil before executing SQL [Erik Veenstra]
-
 
 === 1.2.4 / 27 Aug 2008
 
