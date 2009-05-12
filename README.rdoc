@@ -6,7 +6,7 @@ SQLite engine installed in order to build this module.
 
 Note that this module is NOT compatible with SQLite 2.x.
 
-This version include full UTF-8 support in Ruby 1.9.1.
+This version includes full UTF-8 support in Ruby 1.9.1.
 
 == Compilation and Installation
 
