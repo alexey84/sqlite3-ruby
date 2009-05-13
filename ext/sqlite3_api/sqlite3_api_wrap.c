@@ -130,12 +130,19 @@
 #include "ruby/encoding.h"
 #define STR_NEW(p,n) rb_enc_str_new((p),(n),rb_utf8_encoding())
 #define STR_NEW2(p) rb_enc_str_new((p),strlen(p),rb_utf8_encoding())
+// TODO: using ASCII-8BIT for UTF-16 encoding. There's no function
+// like rb_utf16_encoding(), we need also to determine which UTF-16
+// we want to use (LE, BE)
+#define STR_NEW_UTF_16(p,n) rb_str_new((p),(n))
+#define STR_NEW_ASCII_8BIT(p,n) rb_str_new((p),(n))
 
 #else
 
 // For Ruby 1.8
 #define STR_NEW(p,n) rb_str_new((p),(n))
 #define STR_NEW2(p) rb_str_new2((p))
+#define STR_NEW_UTF_16(p,n) rb_str_new((p),(n))
+#define STR_NEW_ASCII_8BIT(p,n) rb_str_new((p),(n))
 
 #endif
 
@@ -1702,7 +1709,7 @@ _wrap_sqlite3_prepare16(int argc, VALUE *argv, VALUE self) {
         ary = rb_ary_new2(3);
         rb_ary_push( ary, vresult );
         rb_ary_push( ary, SWIG_NewPointerObj( stmt2, SWIGTYPE_p_sqlite3_stmt, 0 ) );
-        rb_ary_push( ary, errmsg2 ? STR_NEW( (char*)errmsg2, i ) : Qnil );
+        rb_ary_push( ary, errmsg2 ? STR_NEW_UTF_16( (char*)errmsg2, i ) : Qnil );
         vresult = ary;
     }
     return vresult;
@@ -1974,7 +1981,7 @@ _wrap_sqlite3_column_name16(int argc, VALUE *argv, VALUE self) {
         int i;
         if( result ) {
             for( i = 0; ((char*)result)[i]; i += 2 );
-            vresult = STR_NEW( (char*)result, i );
+            vresult = STR_NEW_UTF_16( (char*)result, i );
         } else vresult = Qnil;
     }
     return vresult;
@@ -2018,7 +2025,7 @@ _wrap_sqlite3_column_decltype16(int argc, VALUE *argv, VALUE self) {
         int i;
         if( result ) {
             for( i = 0; ((char*)result)[i]; i += 2 );
-            vresult = STR_NEW( (char*)result, i );
+            vresult = STR_NEW_UTF_16( (char*)result, i );
         } else vresult = Qnil;
     }
     return vresult;
@@ -2207,7 +2214,7 @@ _wrap_sqlite3_column_text16(int argc, VALUE *argv, VALUE self) {
         int i;
         if( result ) {
             for( i = 0; ((char*)result)[i]; i += 2 );
-            vresult = STR_NEW( (char*)result, i );
+            vresult = STR_NEW_UTF_16( (char*)result, i );
         } else vresult = Qnil;
     }
     return vresult;
@@ -2354,7 +2361,7 @@ _wrap_sqlite3_value_blob(int argc, VALUE *argv, VALUE self) {
     result = (RUBY_VALBLOB *)sqlite3_value_blob(arg1);
 
     {
-        vresult = result ? STR_NEW( (char*)result, sqlite3_value_bytes( arg1 ) ) : Qnil;
+        vresult = result ? STR_NEW_ASCII_8BIT( (char*)result, sqlite3_value_bytes( arg1 ) ) : Qnil;
     }
     return vresult;
 }
