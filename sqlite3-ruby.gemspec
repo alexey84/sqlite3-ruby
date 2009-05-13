@@ -42,6 +42,7 @@ Gem::Specification.new do |s|
      "lib/sqlite3/translator.rb",
      "lib/sqlite3/value.rb",
      "lib/sqlite3/version.rb",
+     "sqlite3-ruby.gemspec",
      "test/bm.rb",
      "test/driver/dl/tc_driver.rb",
      "test/mocks.rb",
