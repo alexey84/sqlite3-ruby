@@ -1,0 +1,7 @@
+README.rdoc
+faq/faq/*
+lib/**/*.rb
+ext/sqlite3_api/*
+test/**/*.rb
+CHANGELOG.rdoc
+LICENSE

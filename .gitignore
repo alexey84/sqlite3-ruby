@@ -1,4 +1,5 @@
-api
+*.sw?
+.DS_Store
+coverage
+rdoc
 pkg
-doc/faq/faq.html
-*.swp
